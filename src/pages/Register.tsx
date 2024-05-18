@@ -18,7 +18,7 @@ const Register = () => {
         <Input type="password" icon={pencilIcon} placeholder="password" />
         <Input type="password" icon={lockIcon} placeholder="confirm password" />
         <Button text="register"/>
-        <Button isPrimary={false} text="login" />
+        <Button isPrimary={false} text="login" link="/login" />
       </CardCenterIcon>
     </AuthLayout>
   )

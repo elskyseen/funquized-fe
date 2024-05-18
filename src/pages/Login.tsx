@@ -16,7 +16,7 @@ const Login = () => {
         <Input type="email" icon={lockIcon} placeholder="email" />
         <Link to="/login" className="text-xl text-primary mb-4">Forgot Password?</Link>
         <Button text="login"/>
-        <Button isPrimary={false} text="register" />
+        <Button isPrimary={false} text="register" link="/register"/>
         <h1 className="text-xl text-primary mb-4 capitalize">login using alternate</h1>
         <Button icon={googleIcon} isPrimary={false} text="login using google" />
       </CardCenterIcon>
