@@ -5,23 +5,17 @@ import userIcon from "../assets/user_icon.svg";
 import lockIcon from "../assets/lock_icon.svg";
 import googleIcon from "../assets/google_icon.svg";
 import Input from "../components/Input";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../configs/axios";
 import { useState } from "react";
-
-interface ILogin {
-  email: string;
-  password: string;
-}
-
-const loginSchema = Yup.object<ILogin>({
-  email: Yup.string().email().required(),
-  password: Yup.string().required(),
-});
+import { useAppDispatch } from "../hooks/hooks";
+import { setToken } from "../counter/tokenCounter";
+import { setExp } from "../utils/setExp";
+import { ILogin } from "../interfaces";
+import { loginSchema } from "../validations";
 
 const initialValue: ILogin = {
   email: "",
@@ -31,12 +25,15 @@ const initialValue: ILogin = {
 const Login = () => {
   const [isLoginError, setIsLoginError] = useState<string>("");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { mutate } = useMutation({
     mutationFn: async (value: ILogin) => {
       return await axiosInstance
         .post("/login", value)
-        .then(() => {
+        .then(({ data }) => {
+          setExp(data.accessToken);
+          dispatch(setToken(data.accessToken));
           navigate("/");
         })
         .catch((error) => {
@@ -74,9 +71,6 @@ const Login = () => {
                 value={values.password}
                 isError={errors.password}
               />
-              {/* <Link to="" className="text-xl text-primary mb-4">
-              Forgot Password?
-            </Link> */}
               <Button type="submit" text="login" />
               <Button type="button" isPrimary={false} text="register" />
               <h1 className="text-xl text-primary text-center mb-4 capitalize">
