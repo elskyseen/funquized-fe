@@ -9,7 +9,7 @@ interface INavbar {
 
 const Navbar: React.FC<INavbar> = ({ image, username, point }) => {
   return (
-    <nav className="px-10 py-3 bg-primary flex justify-between text-white font-extrabold">
+    <nav className="px-10 py-3 bg-primary flex justify-between text-white font-extrabold fixed top-0 left-0 w-full">
       <div className="flex items-center gap-3">
         <img
           src={image ? image : userIcon}
