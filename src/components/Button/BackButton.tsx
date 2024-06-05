@@ -10,10 +10,10 @@ const BackButton: React.FC<{ isRedirect?: () => void; link?: string }> = ({
   const navigate = useNavigate();
   return (
     <button
-      className="absolute left-0 top-2"
+      className="absolute -left-10 lg:left-0 top-2"
       onClick={!isRedirect ? () => navigate(link || "/") : isRedirect}
     >
-      <img src={backIcon} alt="icon" className="w-20" />
+      <img src={backIcon} alt="icon" className="w-10 lg:w-20" />
     </button>
   );
 };

@@ -17,7 +17,7 @@ const AlertModal: React.FC<IAlert> = ({
 }) => {
   return (
     <ModalLayout isShow={isShow}>
-      <h1 className="text-2xl text-primary font-semibold capitalize mb-10">
+      <h1 className="text-center text-base lg:text-2xl text-primary font-semibold capitalize mb-4 lg:mb-10">
         {text}
       </h1>
       <div className="flex gap-20">

@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { axiosInstance } from "../configs/axios";
 import AppLayout from "../layouts/AppLayout";
 import { IChallenge } from "../interfaces";
@@ -8,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import ResultModal from "../components/Modal/ResultModal";
 import AlertModal from "../components/Modal/AlertModal";
 import BackButton from "../components/Button/BackButton";
+import Title from "../components/Title/Title";
 
 const Challenge = () => {
   const { categorie, level } = useParams<{
@@ -69,6 +75,10 @@ const Challenge = () => {
     mutate();
   };
 
+  if (state === null) {
+    return <Navigate to={"/"} />;
+  }
+
   if (!isPending && answer !== "") {
     setTimeout(() => {
       navigate(state.prevPath);
@@ -84,20 +94,18 @@ const Challenge = () => {
         isShow={isShowModal}
       />
       <ResultModal isShow={!isPending && answer !== ""} data={data} />
-      <div className="flex flex-col my-16 items-center gap-4 relative px-28">
+      <div className="flex flex-col mt-16 mb:4 lg:my-16 items-center gap-4 relative px-4 lg:px-28">
         <BackButton isRedirect={handleShowModal} />
-        <h1 className="text-6xl capitalize text-white font-extrabold">
-          {categorie} challenge
-        </h1>
-        <p className="text-lg text-white capitalize font-extrabold">
+        <Title text={`${categorie} challenge`} />
+        <p className="text-lg text-white capitalize font-extrabold -translate-y-9 lg:translate-y-0">
           level {level}
         </p>
       </div>
-      <div className="flex justify-center items-center flex-col gap-10">
-        <h1 className="text-4xl font-semibold text-white text-center max-w-[800px]">
+      <div className="flex justify-center items-center flex-col gap-10 px-4">
+        <h1 className="text-xl lg:text-4xl font-semibold text-white text-center w-full max-w-[800px]">
           {challenge?.question}
         </h1>
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
           {challenge?.choices.map((choice, index) => {
             return (
               <button

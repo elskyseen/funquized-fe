@@ -7,6 +7,7 @@ import { AppState } from "../stores/store";
 import { IChapter } from "../interfaces";
 import lockIcon from "../assets/lock_icon.svg";
 import BackButton from "../components/Button/BackButton";
+import Title from "../components/Title/Title";
 
 const Chapters = () => {
   const { token } = useAppSelector((state: AppState) => state.token);
@@ -33,13 +34,11 @@ const Chapters = () => {
 
   return (
     <AppLayout>
-      <div className="flex gap-10 relative px-28 mt-8">
+      <div className="flex gap-10 relative px-4 lg:px-28 mt-8">
         <BackButton link="/" />
-        <h1 className="text-6xl text-white font-extrabold capitalize mb-10">
-          {categorie} challenge
-        </h1>
+        <Title text={`${categorie} challenge`} />
       </div>
-      <div className="grid grid-cols-5 gap-12">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
         {chapters.map(({ level, point }, index) => {
           return progres && level <= progres.current_level ? (
             <Link
