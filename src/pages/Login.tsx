@@ -16,6 +16,7 @@ import { setToken } from "../counter/tokenCounter";
 import { setCookie } from "../utils/setCookie";
 import { ILogin } from "../interfaces";
 import { loginSchema } from "../validations";
+import { BASE_URL } from "../variable";
 
 const initialValue: ILogin = {
   email: "",
@@ -41,6 +42,10 @@ const Login = () => {
         });
     },
   });
+
+  const loginUsingGoogle = async () => {
+    window.location.href = `${BASE_URL}/auth/google`;
+  };
 
   return (
     <AuthLayout>
@@ -88,6 +93,7 @@ const Login = () => {
                 icon={googleIcon}
                 isPrimary={false}
                 text="login using google"
+                onClick={loginUsingGoogle}
               />
             </Form>
           )}

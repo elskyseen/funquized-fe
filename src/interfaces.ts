@@ -39,7 +39,7 @@ interface IChallenge {
 }
 
 interface INavbar {
-  image: string;
+  image_url: string;
   username: string;
   point: number;
 }

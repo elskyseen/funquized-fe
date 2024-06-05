@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../configs/axios";
 import { useNavigate } from "react-router-dom";
 
-const Navbar: React.FC<INavbar> = ({ image, username, point }) => {
+const Navbar: React.FC<INavbar> = ({ image_url, username, point }) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -28,7 +28,7 @@ const Navbar: React.FC<INavbar> = ({ image, username, point }) => {
     <nav className="px-10 py-3 bg-primary flex justify-between text-white font-extrabold fixed top-0 left-0 w-full">
       <div className="flex items-center gap-3">
         <img
-          src={image ? image : userIcon}
+          src={image_url ? image_url : userIcon}
           alt="profile"
           className="max-w-12 border-2 border-white rounded-lg"
         />
@@ -38,7 +38,7 @@ const Navbar: React.FC<INavbar> = ({ image, username, point }) => {
         </div>
       </div>
       <button onClick={() => mutate()}>
-        <img src={powerOffIcon} alt="icon" className="w-7"/>
+        <img src={powerOffIcon} alt="icon" className="w-7" />
       </button>
     </nav>
   );

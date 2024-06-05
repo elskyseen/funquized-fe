@@ -30,7 +30,11 @@ const App = () => {
 
   return (
     <>
-      <Navbar image={user.image} point={user.point} username={user.username} />
+      <Navbar
+        image_url={user.image_url}
+        point={user.point}
+        username={user.username}
+      />
       <div className="w-full min-h-full py-24 px-4 lg:px-12 grid grid-cols-3 lg:grid-cols-12 gap-4 font-extrabold text-primary">
         {categories.map(({ category_name, url_image, challenges, id }) => {
           return (

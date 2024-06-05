@@ -2,8 +2,8 @@ import axios from "axios";
 import { setCookie } from "../utils/setCookie";
 import store from "../stores/store";
 import { setToken } from "../counter/tokenCounter";
+import { BASE_URL } from "../variable";
 
-const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 const { token } = store.getState().token;
 
 const axiosInstance = axios.create({
