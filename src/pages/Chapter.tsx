@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks/hooks";
 import { AppState } from "../stores/store";
 import { IChapter } from "../interfaces";
-import backIcon from "../assets/back_icon.svg";
 import lockIcon from "../assets/lock_icon.svg";
+import BackButton from "../components/Button/BackButton";
 
 const Chapters = () => {
   const { token } = useAppSelector((state: AppState) => state.token);
@@ -34,9 +34,7 @@ const Chapters = () => {
   return (
     <AppLayout>
       <div className="flex gap-10 relative px-28 mt-8">
-        <Link to="/" className="absolute left-0 top-2">
-          <img src={backIcon} alt="icon" className="w-20" />
-        </Link>
+        <BackButton link="/" />
         <h1 className="text-6xl text-white font-extrabold capitalize mb-10">
           {categorie} challenge
         </h1>

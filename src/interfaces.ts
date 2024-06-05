@@ -52,6 +52,14 @@ interface IButton {
   onClick?: () => void;
 }
 
+interface IResult {
+  current_level: string;
+  answer_user: string;
+  answer: string;
+  is_correct: boolean;
+  earn_point: number;
+}
+
 export type {
   ILogin,
   IRegister,
@@ -62,4 +70,5 @@ export type {
   IChallenge,
   INavbar,
   IButton,
+  IResult,
 };

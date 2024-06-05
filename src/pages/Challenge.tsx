@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../configs/axios";
 import AppLayout from "../layouts/AppLayout";
-import backIcon from "../assets/back_icon.svg";
 import { IChallenge } from "../interfaces";
-import ModalLayout from "../layouts/ModalLayout";
-import Button from "../components/Button";
+import Spiner from "../components/Spiner";
+import { useMutation } from "@tanstack/react-query";
+import ResultModal from "../components/Modal/ResultModal";
+import AlertModal from "../components/Modal/AlertModal";
+import BackButton from "../components/Button/BackButton";
 
 const Challenge = () => {
   const { categorie, level } = useParams<{
@@ -14,8 +16,9 @@ const Challenge = () => {
   }>();
   const [challenge, setChallenge] = useState<IChallenge>();
   const { state } = useLocation();
-  const [isShowModal, setIsShowModal] = useState<boolean>(true);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [answer, setAnswer] = useState<String>("");
 
   useEffect(() => {
     getChallenge();
@@ -35,6 +38,24 @@ const Challenge = () => {
     }
   };
 
+  const postAnswer = async () => {
+    try {
+      const { data } = await axiosInstance.post("/challenges", {
+        level,
+        categorie,
+        answer,
+      });
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { data, mutate, isPending } = useMutation({
+    mutationKey: ["postAnswer"],
+    mutationFn: postAnswer,
+  });
+
   const handleShowModal = () => {
     setIsShowModal(!isShowModal);
   };
@@ -43,21 +64,28 @@ const Challenge = () => {
     navigate(state.prevPath);
   };
 
+  const handleAnswer = (choice: string) => {
+    setAnswer(choice);
+    mutate();
+  };
+
+  if (!isPending && answer !== "") {
+    setTimeout(() => {
+      navigate(state.prevPath);
+    }, 5000);
+  }
+
   return (
     <AppLayout>
-      <ModalLayout isShow={isShowModal}>
-        <h1 className="text-2xl text-primary font-semibold capitalize mb-10">
-          are you sure, to leave from this challenge?
-        </h1>
-        <div className="flex gap-20">
-          <Button isPrimary={false} text="cancel" onClick={handleShowModal} />
-          <Button text="leave" onClick={handleBackToPrevPage} />
-        </div>
-      </ModalLayout>
+      <AlertModal
+        text={"are you sure, to leave from this challenge?"}
+        isCancel={handleShowModal}
+        isRedirect={handleBackToPrevPage}
+        isShow={isShowModal}
+      />
+      <ResultModal isShow={!isPending && answer !== ""} data={data} />
       <div className="flex flex-col my-16 items-center gap-4 relative px-28">
-        <button className="absolute left-0 top-2" onClick={handleShowModal}>
-          <img src={backIcon} alt="icon" className="w-20" />
-        </button>
+        <BackButton isRedirect={handleShowModal} />
         <h1 className="text-6xl capitalize text-white font-extrabold">
           {categorie} challenge
         </h1>
@@ -72,12 +100,15 @@ const Challenge = () => {
         <div className="grid grid-cols-2 gap-8">
           {challenge?.choices.map((choice, index) => {
             return (
-              <div
-                className="col-span-1 w-full flex items-center justify-center bg-primary rounded border-2 border-white px-40 py-4 cursor-pointer text-xl capitalize text-white font-semibold"
+              <button
+                className="col-span-1 w-full flex items-center justify-center bg-primary rounded border-2 border-white px-40 py-4 cursor-pointer text-xl capitalize text-white font-semibold relative"
                 key={index}
+                onClick={() => handleAnswer(choice)}
+                disabled={isPending}
               >
                 {choice}
-              </div>
+                {choice === answer && isPending && <Spiner />}
+              </button>
             );
           })}
         </div>

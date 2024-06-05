@@ -7,7 +7,7 @@ const ModalLayout: React.FC<{ children: any; isShow: boolean }> = ({
   return (
     <div
       className={
-        (isShow && "hidden") +
+        (isShow ? "block" : "hidden") +
         " w-full min-h-dvh bg-white/40 absolute top-0 left-0 z-10 flex justify-center items-center backdrop-blur-md"
       }
     >
