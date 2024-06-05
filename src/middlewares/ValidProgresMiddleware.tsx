@@ -31,7 +31,7 @@ const ValidProgresMiddleware = () => {
   });
 
   if (!isLoading) {
-    return !data.current_level ? <App /> : <Outlet />;
+    return data.valid_level ? <Outlet context={user} /> : <App />;
   }
 };
 

@@ -3,11 +3,12 @@ import {
   Navigate,
   useLocation,
   useNavigate,
+  useOutletContext,
   useParams,
 } from "react-router-dom";
 import { axiosInstance } from "../configs/axios";
 import AppLayout from "../layouts/AppLayout";
-import { IChallenge } from "../interfaces";
+import { IChallenge, INavbar } from "../interfaces";
 import Spiner from "../components/Spiner";
 import { useMutation } from "@tanstack/react-query";
 import ResultModal from "../components/Modal/ResultModal";
@@ -16,6 +17,7 @@ import BackButton from "../components/Button/BackButton";
 import Title from "../components/Title/Title";
 
 const Challenge = () => {
+  const user: INavbar = useOutletContext();
   const { categorie, level } = useParams<{
     categorie: string;
     level: string;
@@ -50,6 +52,7 @@ const Challenge = () => {
         level,
         categorie,
         answer,
+        username : user.username
       });
       return data.data;
     } catch (error) {
