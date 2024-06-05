@@ -10,7 +10,7 @@ import pencilIcon from "../assets/pencil_icon.svg";
 import envelopIcon from "../assets/envelope_icon.svg";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../configs/axios";
 import { IRegister } from "../interfaces";
 import { registerSchema } from "../validations";
@@ -92,7 +92,14 @@ const Register = () => {
                 isError={errors.confirmPassword}
               />
               <Button type="submit" text="register" />
-              <Button type="button" isPrimary={false} text="login" />
+              <div className="flex">
+                <Link
+                  to={"/login"}
+                  className="bg-white text-primary w-full text-center py-2 capitalize border-2 border-primary rounded font-extrabold mb-3 relative"
+                >
+                  Register
+                </Link>
+              </div>
             </Form>
           )}
         </Formik>

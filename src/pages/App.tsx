@@ -3,12 +3,13 @@ import { useAppSelector } from "../hooks/hooks";
 import { AppState } from "../stores/store";
 import { axiosInstance } from "../configs/axios";
 import { useEffect, useState } from "react";
-import { ICategorie } from "../interfaces";
-import { Link } from "react-router-dom";
+import { ICategorie, INavbar } from "../interfaces";
+import { Link, useOutletContext } from "react-router-dom";
 
 const App = () => {
   const { token } = useAppSelector((state: AppState) => state.token);
   const [categories, setCategories] = useState<ICategorie[]>([]);
+  const user: INavbar = useOutletContext();
 
   useEffect(() => {
     getCategories();
@@ -29,7 +30,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar image={user.image} point={user.point} username={user.username} />
       <div className="w-full min-h-full py-24 px-12 grid grid-cols-12 gap-4 font-extrabold text-primary">
         {categories.map(({ category_name, url_image, challenges, id }) => {
           return (

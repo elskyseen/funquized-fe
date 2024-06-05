@@ -1,13 +1,29 @@
 import React from "react";
 import userIcon from "../assets/user_icon.svg";
-
-interface INavbar {
-  image: string;
-  username: string;
-  point: number;
-}
+import { INavbar } from "../interfaces";
+import powerOffIcon from "../assets/power-off_icon.svg";
+import { useMutation } from "@tanstack/react-query";
+import { axiosInstance } from "../configs/axios";
+import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC<INavbar> = ({ image, username, point }) => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const result = await axiosInstance.delete("/logout", {
+        data: { username },
+      });
+      return result.status === 200 && navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { mutate } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: handleLogout,
+  });
+
   return (
     <nav className="px-10 py-3 bg-primary flex justify-between text-white font-extrabold fixed top-0 left-0 w-full">
       <div className="flex items-center gap-3">
@@ -21,7 +37,9 @@ const Navbar: React.FC<INavbar> = ({ image, username, point }) => {
           <p>{point} point</p>
         </div>
       </div>
-      <button>logout</button>
+      <button onClick={() => mutate()}>
+        <img src={powerOffIcon} alt="icon" className="w-7"/>
+      </button>
     </nav>
   );
 };

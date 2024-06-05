@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../configs/axios";
 import AppLayout from "../layouts/AppLayout";
+import backIcon from "../assets/back_icon.svg";
 import { IChallenge } from "../interfaces";
+import ModalLayout from "../layouts/ModalLayout";
+import Button from "../components/Button";
 
 const Challenge = () => {
   const { categorie, level } = useParams<{
@@ -10,6 +13,9 @@ const Challenge = () => {
     level: string;
   }>();
   const [challenge, setChallenge] = useState<IChallenge>();
+  const { state } = useLocation();
+  const [isShowModal, setIsShowModal] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getChallenge();
@@ -29,9 +35,29 @@ const Challenge = () => {
     }
   };
 
+  const handleShowModal = () => {
+    setIsShowModal(!isShowModal);
+  };
+
+  const handleBackToPrevPage = () => {
+    navigate(state.prevPath);
+  };
+
   return (
     <AppLayout>
-      <div className="flex flex-col mb-16 items-center gap-4">
+      <ModalLayout isShow={isShowModal}>
+        <h1 className="text-2xl text-primary font-semibold capitalize mb-10">
+          are you sure, to leave from this challenge?
+        </h1>
+        <div className="flex gap-20">
+          <Button isPrimary={false} text="cancel" onClick={handleShowModal} />
+          <Button text="leave" onClick={handleBackToPrevPage} />
+        </div>
+      </ModalLayout>
+      <div className="flex flex-col my-16 items-center gap-4 relative px-28">
+        <button className="absolute left-0 top-2" onClick={handleShowModal}>
+          <img src={backIcon} alt="icon" className="w-20" />
+        </button>
         <h1 className="text-6xl capitalize text-white font-extrabold">
           {categorie} challenge
         </h1>

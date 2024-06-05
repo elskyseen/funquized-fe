@@ -5,7 +5,7 @@ import userIcon from "../assets/user_icon.svg";
 import lockIcon from "../assets/lock_icon.svg";
 import googleIcon from "../assets/google_icon.svg";
 import Input from "../components/Input";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { Formik, Form } from "formik";
 import { useMutation } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ import { axiosInstance } from "../configs/axios";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks/hooks";
 import { setToken } from "../counter/tokenCounter";
-import { setExp } from "../utils/setExp";
+import { setCookie } from "../utils/setCookie";
 import { ILogin } from "../interfaces";
 import { loginSchema } from "../validations";
 
@@ -32,7 +32,7 @@ const Login = () => {
       return await axiosInstance
         .post("/login", value)
         .then(({ data }) => {
-          setExp(data.accessToken);
+          setCookie(data.accessToken);
           dispatch(setToken(data.accessToken));
           navigate("/");
         })
@@ -72,7 +72,14 @@ const Login = () => {
                 isError={errors.password}
               />
               <Button type="submit" text="login" />
-              <Button type="button" isPrimary={false} text="register" />
+              <div className="flex">
+                <Link
+                  to={"/register"}
+                  className="bg-white text-primary w-full text-center py-2 capitalize border-2 border-primary rounded font-extrabold mb-3 relative"
+                >
+                  Register
+                </Link>
+              </div>
               <h1 className="text-xl text-primary text-center mb-4 capitalize">
                 login using alternate
               </h1>

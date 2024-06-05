@@ -3,10 +3,8 @@ interface ILogin {
   password: string;
 }
 
-interface IRegister {
+interface IRegister extends ILogin {
   username: string;
-  email: string;
-  password: string;
   confirmPassword: string;
 }
 
@@ -40,6 +38,20 @@ interface IChallenge {
   choices: string[];
 }
 
+interface INavbar {
+  image: string;
+  username: string;
+  point: number;
+}
+
+interface IButton {
+  icon?: string;
+  isPrimary?: boolean;
+  text: string;
+  type?: "submit" | "button";
+  onClick?: () => void;
+}
+
 export type {
   ILogin,
   IRegister,
@@ -48,4 +60,6 @@ export type {
   IUserSlice,
   IChapter,
   IChallenge,
+  INavbar,
+  IButton,
 };

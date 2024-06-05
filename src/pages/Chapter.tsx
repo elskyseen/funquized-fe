@@ -33,7 +33,7 @@ const Chapters = () => {
 
   return (
     <AppLayout>
-      <div className="flex gap-10 relative px-28">
+      <div className="flex gap-10 relative px-28 mt-8">
         <Link to="/" className="absolute left-0 top-2">
           <img src={backIcon} alt="icon" className="w-20" />
         </Link>
@@ -46,6 +46,7 @@ const Chapters = () => {
           return progres && level <= progres.current_level ? (
             <Link
               to={`/chapters/${categorie}/${level}`}
+              state={{ prevPath: location.pathname }}
               key={index}
               className="col-span-1 p-4 flex flex-col justify-center items-center border-2 border-white rounded text-white font-extrabold"
             >
