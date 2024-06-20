@@ -27,12 +27,14 @@ const Challenge = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const [answer, setAnswer] = useState<String>("");
+  const [isGetData, setIsGetData] = useState<boolean>(false);
 
   useEffect(() => {
     getChallenge();
   }, []);
 
   const getChallenge = async () => {
+    setIsGetData(true);
     try {
       const { data } = await axiosInstance.get("/challenges", {
         params: {
@@ -41,6 +43,7 @@ const Challenge = () => {
         },
       });
       setChallenge(data.data);
+      setIsGetData(false);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +55,7 @@ const Challenge = () => {
         level,
         categorie,
         answer,
-        username : user.username
+        username: user.username,
       });
       return data.data;
     } catch (error) {
@@ -104,26 +107,34 @@ const Challenge = () => {
           level {level}
         </p>
       </div>
-      <div className="flex justify-center items-center flex-col gap-10 px-4">
-        <h1 className="text-xl lg:text-4xl font-semibold text-white text-center w-full max-w-[800px]">
-          {challenge?.question}
-        </h1>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
-          {challenge?.choices.map((choice, index) => {
-            return (
-              <button
-                className="col-span-1 w-full flex items-center justify-center bg-primary rounded border-2 border-white px-40 py-4 cursor-pointer text-xl capitalize text-white font-semibold relative"
-                key={index}
-                onClick={() => handleAnswer(choice)}
-                disabled={isPending}
-              >
-                {choice}
-                {choice === answer && isPending && <Spiner />}
-              </button>
-            );
-          })}
+      {isGetData ? (
+        <Spiner />
+      ) : (
+        <div className="flex justify-center items-center flex-col gap-10 px-4">
+          <h1 className="text-xl lg:text-4xl font-semibold text-white text-center w-full max-w-[800px]">
+            {challenge?.question}
+          </h1>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
+            {challenge?.choices.map((choice, index) => {
+              return (
+                <button
+                  className="col-span-1 w-full flex items-center justify-center bg-primary rounded border-2 border-white px-40 py-4 cursor-pointer text-xl capitalize text-white font-semibold relative"
+                  key={index}
+                  onClick={() => handleAnswer(choice)}
+                  disabled={isPending}
+                >
+                  {choice}
+                  {choice === answer && isPending && (
+                    <div className="absolute bottom-4 right-4">
+                      <Spiner />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </AppLayout>
   );
 };
