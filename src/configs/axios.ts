@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
     const cookie = document.cookie;
     const exp = parseInt(cookie.split("iat=")[1]);
     const date = new Date();
-    if (date.getTime() > exp * 1000) {
+    if (date.getTime() > exp * 1000 || !token) {
       try {
         const { data } = await axios.get(`${BASE_URL}/token`, {
           withCredentials: true,
