@@ -57,7 +57,7 @@ const Register = () => {
             });
           }}
         >
-          {({ values, errors }) => (
+          {({ values, errors, touched }) => (
             <Form>
               <Input
                 type="text"
@@ -65,7 +65,9 @@ const Register = () => {
                 placeholder="username"
                 value={values.username}
                 icon={userIcon}
-                isError={errors.username}
+                isError={
+                  errors.username && touched.username ? errors.username : ""
+                }
               />
               <Input
                 type="email"
@@ -73,7 +75,7 @@ const Register = () => {
                 icon={envelopIcon}
                 value={values.email}
                 placeholder="email"
-                isError={errors.email}
+                isError={errors.email && touched.email ? errors.email : ""}
               />
               <Input
                 type="password"
@@ -81,7 +83,9 @@ const Register = () => {
                 icon={pencilIcon}
                 placeholder="password"
                 value={values.password}
-                isError={errors.password}
+                isError={
+                  errors.password && touched.password ? errors.password : ""
+                }
               />
               <Input
                 type="password"
@@ -89,7 +93,11 @@ const Register = () => {
                 icon={lockIcon}
                 placeholder="confirm password"
                 value={values.confirmPassword}
-                isError={errors.confirmPassword}
+                isError={
+                  errors.confirmPassword && touched.confirmPassword
+                    ? errors.confirmPassword
+                    : ""
+                }
               />
               <Button type="submit" text="register" />
               <div className="flex">
@@ -97,7 +105,7 @@ const Register = () => {
                   to={"/login"}
                   className="bg-white text-primary w-full text-center py-2 capitalize border-2 border-primary rounded font-extrabold mb-3 relative"
                 >
-                  Register
+                  Login
                 </Link>
               </div>
             </Form>

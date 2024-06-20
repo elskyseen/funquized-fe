@@ -58,7 +58,7 @@ const Login = () => {
             resetForm();
           }}
         >
-          {({ errors, values }) => (
+          {({ errors, values, touched }) => (
             <Form>
               <Input
                 type="email"
@@ -66,7 +66,7 @@ const Login = () => {
                 icon={userIcon}
                 placeholder="email"
                 value={values.email}
-                isError={errors.email}
+                isError={errors.email && touched.email ? errors.email : ""}
               />
               <Input
                 type="password"
@@ -74,7 +74,9 @@ const Login = () => {
                 icon={lockIcon}
                 placeholder="password"
                 value={values.password}
-                isError={errors.password}
+                isError={
+                  errors.password && touched.password ? errors.password : ""
+                }
               />
               <Button type="submit" text="login" />
               <div className="flex">

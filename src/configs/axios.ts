@@ -12,6 +12,7 @@ const axiosInstance = axios.create({
   headers: {
     Authorization: `Bearer ${token}`,
   },
+  timeout: 20000,
 });
 
 axiosInstance.interceptors.request.use(
