@@ -47,7 +47,7 @@ interface INavbar {
 interface IButton {
   icon?: string;
   isPrimary?: boolean;
-  text: string;
+  text: any;
   type?: "submit" | "button";
   onClick?: () => void;
 }

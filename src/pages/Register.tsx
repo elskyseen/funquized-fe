@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../configs/axios";
 import { IRegister } from "../interfaces";
 import { registerSchema } from "../validations";
+import Spiner from "../components/Spiner";
 
 const initialValue: IRegister = {
   username: "",
@@ -57,7 +58,7 @@ const Register = () => {
             });
           }}
         >
-          {({ values, errors, touched }) => (
+          {({ values, errors, touched, isSubmitting }) => (
             <Form>
               <Input
                 type="text"
@@ -99,7 +100,10 @@ const Register = () => {
                     : ""
                 }
               />
-              <Button type="submit" text="register" />
+              <Button
+                type="submit"
+                text={isSubmitting ? <Spiner /> : "register"}
+              />
               <div className="flex">
                 <Link
                   to={"/login"}

@@ -17,6 +17,7 @@ import { setCookie } from "../utils/setCookie";
 import { ILogin } from "../interfaces";
 import { loginSchema } from "../validations";
 import { BASE_URL } from "../variable";
+import Spiner from "../components/Spiner";
 
 const initialValue: ILogin = {
   email: "",
@@ -58,7 +59,7 @@ const Login = () => {
             resetForm();
           }}
         >
-          {({ errors, values, touched }) => (
+          {({ errors, values, touched, isSubmitting }) => (
             <Form>
               <Input
                 type="email"
@@ -78,7 +79,10 @@ const Login = () => {
                   errors.password && touched.password ? errors.password : ""
                 }
               />
-              <Button type="submit" text="login" />
+              <Button
+                type="submit"
+                text={isSubmitting ? <Spiner /> : "login"}
+              />
               <div className="flex">
                 <Link
                   to={"/register"}
