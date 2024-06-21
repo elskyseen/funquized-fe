@@ -5,6 +5,7 @@ import powerOffIcon from "../assets/power-off_icon.svg";
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../configs/axios";
 import { useNavigate } from "react-router-dom";
+import Spiner from "./Spiner";
 
 const Navbar: React.FC<INavbar> = ({ image_url, username, point }) => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Navbar: React.FC<INavbar> = ({ image_url, username, point }) => {
     }
   };
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["logout"],
     mutationFn: handleLogout,
   });
@@ -37,9 +38,15 @@ const Navbar: React.FC<INavbar> = ({ image_url, username, point }) => {
           <p>{point} point</p>
         </div>
       </div>
-      <button onClick={() => mutate()}>
-        <img src={powerOffIcon} alt="icon" className="w-7" />
-      </button>
+      <div className="flex justify-center items-center">
+        {isPending ? (
+          <Spiner />
+        ) : (
+          <button onClick={() => mutate()}>
+            <img src={powerOffIcon} alt="icon" className="w-7" />
+          </button>
+        )}
+      </div>
     </nav>
   );
 };

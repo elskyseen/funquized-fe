@@ -18,7 +18,7 @@ const Button: React.FC<IButton> = ({
       onClick={onClick}
     >
       {icon && <img src={icon} alt="icon" className="absolute top-1 left-1" />}
-      <p>{text}</p>
+      <div className="flex justify-center items-center">{text}</div>
     </button>
   );
 };
