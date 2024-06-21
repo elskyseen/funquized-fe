@@ -27,7 +27,7 @@ const Register = () => {
   const [isRegisterError, setIsRegisterError] = useState<string>("");
   const navigate = useNavigate();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (newUser: IRegister) => {
       return await axiosInstance
         .post("/users", newUser)
@@ -58,7 +58,7 @@ const Register = () => {
             });
           }}
         >
-          {({ values, errors, touched, isSubmitting }) => (
+          {({ values, errors, touched }) => (
             <Form>
               <Input
                 type="text"
@@ -102,7 +102,7 @@ const Register = () => {
               />
               <Button
                 type="submit"
-                text={isSubmitting ? <Spiner /> : "register"}
+                text={isPending ? <Spiner /> : "register"}
               />
               <div className="flex">
                 <Link

@@ -29,7 +29,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (value: ILogin) => {
       return await axiosInstance
         .post("/login", value)
@@ -59,7 +59,7 @@ const Login = () => {
             resetForm();
           }}
         >
-          {({ errors, values, touched, isSubmitting }) => (
+          {({ errors, values, touched }) => (
             <Form>
               <Input
                 type="email"
@@ -79,10 +79,7 @@ const Login = () => {
                   errors.password && touched.password ? errors.password : ""
                 }
               />
-              <Button
-                type="submit"
-                text={isSubmitting ? <Spiner /> : "login"}
-              />
+              <Button type="submit" text={isPending ? <Spiner /> : "login"} />
               <div className="flex">
                 <Link
                   to={"/register"}
