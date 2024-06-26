@@ -34,6 +34,7 @@ const Login = () => {
         .then(({ data }) => {
           setCookie(data.accessToken);
           dispatch(setToken(data.accessToken));
+          document.cookie = "isLogin=true;path=/";
           navigate("/");
         })
         .catch((error) => {
