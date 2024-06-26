@@ -1,7 +1,12 @@
 import React from "react";
 import { IButton } from "../interfaces";
 
-const Button: React.FC<IButton> = ({ isPrimary = true, text, type }) => {
+const Button: React.FC<IButton> = ({
+  isPrimary = true,
+  text,
+  type,
+  onClick,
+}) => {
   return (
     <button
       type={type}
@@ -9,6 +14,7 @@ const Button: React.FC<IButton> = ({ isPrimary = true, text, type }) => {
         (isPrimary ? "bg-primary text-white" : "bg-white text-primary") +
         " w-full py-2 capitalize border-2 border-primary rounded font-extrabold mb-3 relative"
       }
+      onClick={onClick}
     >
       <div className="flex justify-center items-center">{text}</div>
     </button>

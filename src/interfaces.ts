@@ -47,6 +47,7 @@ interface IButton {
   isPrimary?: boolean;
   text: any;
   type?: "submit" | "button";
+  onClick?: () => void;
 }
 
 interface IResult {
