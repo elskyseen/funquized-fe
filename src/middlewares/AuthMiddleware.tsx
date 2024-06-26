@@ -3,20 +3,19 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../configs/axios";
 
 const AuthRouters = () => {
-  const cookie = document.cookie;
+  const isLogin = window.localStorage.getItem("isLogin");
 
   const getUser = async () => {
     const { data } = await axiosInstance.get("/users");
     return data.data;
   };
 
-
   const { data, isLoading } = useQuery({
     queryKey: ["getUser"],
     queryFn: getUser,
   });
 
-  if (!cookie.includes("isLogin")) {
+  if (!isLogin) {
     return <Navigate to={"/login"} />;
   }
 

@@ -14,6 +14,7 @@ const Navbar: React.FC<INavbar> = ({ image_url, username, point }) => {
       const result = await axiosInstance.delete("/logout", {
         data: { username },
       });
+      window.localStorage.clear();
       return result.status === 200 && navigate("/login");
     } catch (error) {
       console.log(error);
