@@ -7,7 +7,6 @@ import userIcon from "../assets/user_icon.svg";
 import lockIcon from "../assets/lock_icon.svg";
 import registerIcon from "../assets/register_icon.svg";
 import pencilIcon from "../assets/pencil_icon.svg";
-import envelopIcon from "../assets/envelope_icon.svg";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,7 +17,6 @@ import Spiner from "../components/Spiner";
 
 const initialValue: IRegister = {
   username: "",
-  email: "",
   password: "",
   confirmPassword: "",
 };
@@ -52,7 +50,6 @@ const Register = () => {
               values: {
                 password: "",
                 confirmPassword: "",
-                email: value.email,
                 username: value.username,
               },
             });
@@ -69,14 +66,6 @@ const Register = () => {
                 isError={
                   errors.username && touched.username ? errors.username : ""
                 }
-              />
-              <Input
-                type="email"
-                name="email"
-                icon={envelopIcon}
-                value={values.email}
-                placeholder="email"
-                isError={errors.email && touched.email ? errors.email : ""}
               />
               <Input
                 type="password"

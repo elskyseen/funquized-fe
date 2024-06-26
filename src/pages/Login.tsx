@@ -3,7 +3,6 @@ import AuthLayout from "../layouts/AuthLayout";
 import loginIcon from "../assets/login_icon.svg";
 import userIcon from "../assets/user_icon.svg";
 import lockIcon from "../assets/lock_icon.svg";
-import googleIcon from "../assets/google_icon.svg";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -16,11 +15,10 @@ import { setToken } from "../counter/tokenCounter";
 import { setCookie } from "../utils/setCookie";
 import { ILogin } from "../interfaces";
 import { loginSchema } from "../validations";
-import { BASE_URL } from "../variable";
 import Spiner from "../components/Spiner";
 
 const initialValue: ILogin = {
-  email: "",
+  username: "",
   password: "",
 };
 
@@ -44,10 +42,6 @@ const Login = () => {
     },
   });
 
-  const loginUsingGoogle = async () => {
-    window.location.href = `${BASE_URL}/auth/google`;
-  };
-
   return (
     <AuthLayout>
       <CardCenterIcon icon={loginIcon} isError={isLoginError}>
@@ -62,12 +56,14 @@ const Login = () => {
           {({ errors, values, touched }) => (
             <Form>
               <Input
-                type="email"
-                name="email"
+                type="text"
+                name="username"
                 icon={userIcon}
-                placeholder="email"
-                value={values.email}
-                isError={errors.email && touched.email ? errors.email : ""}
+                placeholder="username"
+                value={values.username}
+                isError={
+                  errors.username && touched.username ? errors.username : ""
+                }
               />
               <Input
                 type="password"
@@ -88,16 +84,6 @@ const Login = () => {
                   Register
                 </Link>
               </div>
-              <h1 className="text-xl text-primary text-center mb-4 capitalize">
-                login using alternate
-              </h1>
-              <Button
-                type="button"
-                icon={googleIcon}
-                isPrimary={false}
-                text="login using google"
-                onClick={loginUsingGoogle}
-              />
             </Form>
           )}
         </Formik>

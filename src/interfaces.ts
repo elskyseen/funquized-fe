@@ -1,10 +1,9 @@
 interface ILogin {
-  email: string;
+  username: string;
   password: string;
 }
 
 interface IRegister extends ILogin {
-  username: string;
   confirmPassword: string;
 }
 
@@ -45,11 +44,9 @@ interface INavbar {
 }
 
 interface IButton {
-  icon?: string;
   isPrimary?: boolean;
   text: any;
   type?: "submit" | "button";
-  onClick?: () => void;
 }
 
 interface IResult {
